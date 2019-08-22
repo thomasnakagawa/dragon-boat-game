@@ -7,10 +7,6 @@ using UnityEngine.UI;
 
 public class Leaderboard : MonoBehaviour
 {
-    // GET THESE FROM DREAMLO
-    private string publicKey = "REPLACEME";
-    private string privateKey = "REPLACEME";
-
     [SerializeField] private Canvas canvas;
     [SerializeField] private Button submitButton;
     [SerializeField] private TMPro.TMP_InputField inputField;
@@ -66,8 +62,7 @@ public class Leaderboard : MonoBehaviour
 
     IEnumerator FetchLeaderboard()
     {
-        
-        string url = "http://dreamlo.com/lb/" + publicKey + "/pipe/10";
+        string url = "http://dreamlo.com/lb/" + SecretStrings.DREAMLO_PUBLIC_KEY + "/pipe/100";
         UnityWebRequest www = UnityWebRequest.Get(url);
         listText.text = "Loading...";
         yield return www.SendWebRequest();
@@ -87,7 +82,7 @@ public class Leaderboard : MonoBehaviour
 
     private IEnumerator PostScore(float time)
     {
-        string url = "http://dreamlo.com/lb/" + privateKey + "/add-pipe/" + inputField.text + "/" + timeToScore(time);
+        string url = "http://dreamlo.com/lb/" + SecretStrings.DREAMLO_PRIVATE_KEY + "/add-pipe/" + inputField.text + "/" + timeToScore(time);
         UnityWebRequest www = UnityWebRequest.Get(url);
         listText.text = "Loading...";
         yield return www.SendWebRequest();
@@ -109,7 +104,7 @@ public class Leaderboard : MonoBehaviour
     {
         string[] rows = response.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
         string message = "";
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
             message += ((i + 1).ToString() + ": ");
             if (i < rows.Length)

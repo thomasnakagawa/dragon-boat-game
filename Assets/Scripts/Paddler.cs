@@ -16,6 +16,8 @@ public class Paddler : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         initialPitch = audioSource.pitch;
+
+        transform.Find("Person").transform.localScale = new Vector3(Random.Range(0.9f, 1.1f), Random.Range(0.9f, 1.1f), 1f);
     }
 
     // Update is called once per frame

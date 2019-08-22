@@ -11,6 +11,9 @@ public class HUD : MonoBehaviour
     public TMPro.TMP_Text timeText;
     public Leaderboard leaderboard;
 
+    [SerializeField] private AudioClip WinSound = default;
+    [SerializeField] private AudioClip AltWinSound = default;
+
     private float elapsedTime = 0f;
     private bool raceStarted = false;
     private float startedAt;
@@ -58,6 +61,11 @@ public class HUD : MonoBehaviour
         {
             Application.Quit();
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            leaderboard.open(999);
+        }
     }
 
     public void endRace()
@@ -67,5 +75,18 @@ public class HUD : MonoBehaviour
         endedAt = Time.time;
 
         leaderboard.open(endedAt - startedAt);
+
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource != null)
+        {
+            if (endedAt - startedAt > 90f)
+            {
+                audioSource.PlayOneShot(AltWinSound);
+            }
+            else
+            {
+                audioSource.PlayOneShot(WinSound);
+            }
+        }
     }
 }

@@ -62,7 +62,7 @@ public class Leaderboard : MonoBehaviour
 
     IEnumerator FetchLeaderboard()
     {
-        string url = "http://dreamlo.com/lb/" + SecretStrings.DREAMLO_PUBLIC_KEY + "/pipe/100";
+        string url = "https://www.dreamlo.com/lb/" + SecretStrings.DREAMLO_PUBLIC_KEY + "/pipe/100";
         UnityWebRequest www = UnityWebRequest.Get(url);
         listText.text = "Loading...";
         yield return www.SendWebRequest();
@@ -82,7 +82,7 @@ public class Leaderboard : MonoBehaviour
 
     private IEnumerator PostScore(float time)
     {
-        string url = "http://dreamlo.com/lb/" + SecretStrings.DREAMLO_PRIVATE_KEY + "/add-pipe/" + inputField.text + "/" + timeToScore(time);
+        string url = "https://www.dreamlo.com/lb/" + SecretStrings.DREAMLO_PRIVATE_KEY + "/add-pipe/" + inputField.text + "/" + timeToScore(time);
         UnityWebRequest www = UnityWebRequest.Get(url);
         listText.text = "Loading...";
         yield return www.SendWebRequest();
@@ -104,7 +104,16 @@ public class Leaderboard : MonoBehaviour
     {
         string[] rows = response.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
         string message = "";
-        for (int i = 0; i < 100; i++)
+        int rowsToShow = rows.Length;
+        if (rowsToShow > 100)
+        {
+            rowsToShow = 100;
+        }
+        if (rowsToShow < 10)
+        {
+            rowsToShow = 10;
+        }
+        for (int i = 0; i < rowsToShow; i++)
         {
             message += ((i + 1).ToString() + ": ");
             if (i < rows.Length)

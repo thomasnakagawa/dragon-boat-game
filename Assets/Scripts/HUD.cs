@@ -62,7 +62,7 @@ public class HUD : MonoBehaviour
             Application.Quit();
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && Application.isEditor)
         {
             leaderboard.open(999);
         }

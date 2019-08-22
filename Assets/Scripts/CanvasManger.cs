@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CanvasManger : MonoBehaviour
@@ -44,6 +45,37 @@ public class CanvasManger : MonoBehaviour
                 tutorialCanvas2.enabled = false;
             }
         }
+        if (Input.touchCount > 0)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                if (atTitle)
+                {
+                    atTitle = false;
+                    StartCoroutine(titleStart());
+                    GameObject.FindObjectsOfType<FlyingDrummer>().ToList().ForEach(a => a.fly());
+                } 
+                else
+                {
+                    GameObject.FindObjectOfType<DrumHitter>().HitDrum();
+                }
+            }
+        }
+        /*
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (atTitle)
+            {
+                atTitle = false;
+                StartCoroutine(titleStart());
+                GameObject.FindObjectsOfType<FlyingDrummer>().ToList().ForEach(a => a.fly());
+            }
+            else
+            {
+                GameObject.FindObjectOfType<DrumHitter>().HitDrum();
+            }
+        }
+        */
     }
 
     private IEnumerator titleStart()

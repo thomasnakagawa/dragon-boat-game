@@ -20,15 +20,21 @@ public class DrumHitter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            animator.SetTrigger("Hit");
-            audioSource.Play();
-            foreach (Paddler paddler in paddlers)
+            HitDrum();
+        }
+    }
+
+    public void HitDrum()
+    {
+        animator.SetTrigger("Hit");
+        audioSource.Play();
+        foreach (Paddler paddler in paddlers)
+        {
+            if (paddler != null && paddler.gameObject.activeInHierarchy)
             {
-                if (paddler != null && paddler.gameObject.activeInHierarchy)
-                {
-                    paddler.paddle();
-                }
+                paddler.paddle();
             }
         }
     }
+
 }
